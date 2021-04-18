@@ -76,13 +76,11 @@ class VideoExporter {
         do {
             reader = try AVAssetReader(asset: asset)
             
-            printDebug("Export Configuration")
             // Export Configuration
             writer = try AVAssetWriter(url: encoderConfiguration.exportConfiguration.outputURL, fileType: encoderConfiguration.exportConfiguration.fileType)
             writer.shouldOptimizeForNetworkUse = encoderConfiguration.exportConfiguration.shouldOptimizeForNetworkUse
             writer.metadata = encoderConfiguration.exportConfiguration.metadata
             
-            printDebug("Adjust Video Duration")
             // Maximum Video Duration
             let duration: CMTimeRange
             if asset.duration.seconds > encoderConfiguration.videoConfiguration.videoOutputSetting.compressionSettings.maximumDuration {
@@ -94,7 +92,6 @@ class VideoExporter {
             
             reader.timeRange = duration
             
-            printDebug("Video Output Configuration")
             // Video output
             let videoTracks = asset.tracks(withMediaType: .video)
             if videoTracks.count > 0 {
@@ -109,7 +106,6 @@ class VideoExporter {
                 reader.add(videoOutput)
                 self.videoOutput = videoOutput
                 
-                printDebug("Video Input Configuration")
                 // Video input
                 let videoInput = AVAssetWriterInput(mediaType: .video, outputSettings: encoderConfiguration.videoConfiguration.videoOutputSetting.outputConfiguration())
                 videoInput.expectsMediaDataInRealTime = false
@@ -120,7 +116,6 @@ class VideoExporter {
                 self.videoInput = videoInput
             }
             
-            printDebug("Audio Output Configuration")
             // Audio output
             let audioTracks = asset.tracks(withMediaType: .audio)
             if audioTracks.count > 0 {
@@ -137,7 +132,6 @@ class VideoExporter {
                 }
                 
                 if self.audioOutput != nil {
-                    printDebug("Audio Input Configuration")
                     // Audio input
                     let audioInput = AVAssetWriterInput(mediaType: .audio, outputSettings: encoderConfiguration.audioConfiguration.audioOutputSetting?.outputSettings())
                     audioInput.expectsMediaDataInRealTime = false
@@ -148,12 +142,10 @@ class VideoExporter {
                 }
             }
             
-            printDebug("Starting Writing/Read process")
             writer.startWriting()
             reader.startReading()
             writer.startSession(atSourceTime: .zero)
             
-            printDebug("Starting encoding process")
             encodeVideoData()
             encodeAudioData()
         } catch {

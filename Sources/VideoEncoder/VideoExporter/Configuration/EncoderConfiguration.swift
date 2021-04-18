@@ -22,7 +22,6 @@ struct EncoderConfiguration {
 }
 
 func defaultEncoderConfiguration(videoTrack: AVAssetTrack) -> EncoderConfiguration {
-    printDebug("Default Encoder configuration used")
 
     let videoOutputSettings = VideoOutputSettings(videoTrack: videoTrack)
     let composition = VideoComposition(videoOutputSettings: videoOutputSettings, videoTrack: videoTrack)
