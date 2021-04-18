@@ -1,4 +1,4 @@
-# VideoEncoder
+# Video Encoder
 
 ### Video Compression package
 
