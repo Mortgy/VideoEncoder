@@ -22,7 +22,7 @@ struct VideoOutputSettings {
     let compressionSettings: CompressionSettings
     let videoTrack: AVAssetTrack
     
-    init(width: CGFloat = 540, height: CGFloat = 960, compressionSettings: CompressionSettings = CompressionSettings(), videoTrack: AVAssetTrack) {
+    init(width: CGFloat = 1280, height: CGFloat = 720, compressionSettings: CompressionSettings = CompressionSettings(), videoTrack: AVAssetTrack) {
         self.width = width
         self.height = height
         self.compressionSettings = compressionSettings
@@ -60,7 +60,7 @@ struct CompressionSettings {
     let maxKeyframePerSecond: Int
     let bitRate: Int
     
-    init(encoding: AVVideoCodecType = .h264, framePerSecond: Float = 24, maxKeyframePerSecond: Int = 1, bitRate: Int = 1000000, maximumDuration: Double = 20) {
+    init(encoding: AVVideoCodecType = .h264, framePerSecond: Float = 24, maxKeyframePerSecond: Int = 1, bitRate: Int = 1000000, maximumDuration: Double = -1) {
         self.encoding = encoding
         self.framePerSecond = framePerSecond
         self.maxKeyframePerSecond = maxKeyframePerSecond

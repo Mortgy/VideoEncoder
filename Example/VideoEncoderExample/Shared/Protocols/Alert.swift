@@ -12,7 +12,7 @@ protocol Alert {
     func showAlert(from: (UIViewController & Alert), title: String, message: String, actions: [UIAlertAction]?)
 }
 
-extension Alert {
+extension Alert where Self: UIViewController{
     func showAlert(from: (UIViewController & Alert), title: String, message: String, actions: [UIAlertAction]? = nil) {
         guard from.presentedViewController  == nil else { return }
         

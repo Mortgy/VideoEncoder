@@ -83,7 +83,7 @@ class VideoEncoder {
             
             // Maximum Video Duration
             let duration: CMTimeRange
-            if asset.duration.seconds > encoderConfiguration.videoConfiguration.videoOutputSetting.compressionSettings.maximumDuration {
+            if encoderConfiguration.videoConfiguration.videoOutputSetting.compressionSettings.maximumDuration > 0 && asset.duration.seconds > encoderConfiguration.videoConfiguration.videoOutputSetting.compressionSettings.maximumDuration {
                 let beginTime = CMTimeMakeWithSeconds(0, preferredTimescale: asset.duration.timescale)
                 duration = CMTimeRangeMake(start: beginTime, duration: CMTimeMakeWithSeconds(encoderConfiguration.videoConfiguration.videoOutputSetting.compressionSettings.maximumDuration, preferredTimescale: asset.duration.timescale))
             } else {
