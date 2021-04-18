@@ -15,7 +15,7 @@ let package = Package(
         .target(
             name: "VideoEncoder",
             dependencies: [],
-            exclude: ["Images/*"]),
+            exclude: ["Images/*", "Example/*"]),
         .testTarget(
             name: "VideoEncoderTests",
             dependencies: ["VideoEncoder"]),
