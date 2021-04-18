@@ -14,7 +14,8 @@ let package = Package(
     targets: [
         .target(
             name: "VideoEncoder",
-            dependencies: []),
+            dependencies: [],
+            exclude: ["Images/*"]),
         .testTarget(
             name: "VideoEncoderTests",
             dependencies: ["VideoEncoder"]),
