@@ -6,7 +6,7 @@ you may compress any videos by providing compression attributes you want, or use
 
 ### Class Diagram
 
-![Class Diagram](https://raw.githubusercontent.com/Mortgy/VideoEncoder-iOS/main/Images/class-diagram.jpg?raw=true)
+![Class Diagram](https://github.com/Mortgy/VideoEncoder-iOS/blob/main/Images/class-diagram.jpg?raw=true)
 
 ### Usage
 
