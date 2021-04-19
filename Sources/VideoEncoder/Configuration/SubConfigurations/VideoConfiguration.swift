@@ -17,20 +17,28 @@ struct VideoConfiguration {
 
 struct VideoOutputSettings {
     
-    let width: CGFloat
-    let height: CGFloat
+    let portraitSize: CGSize
+    let landscapeSize: CGSize
     let compressionSettings: CompressionSettings
     let videoTrack: AVAssetTrack
     
-    init(width: CGFloat = 1280, height: CGFloat = 720, compressionSettings: CompressionSettings = CompressionSettings(), videoTrack: AVAssetTrack) {
-        self.width = width
-        self.height = height
+    init(portraitSize: CGSize = CGSize(width: 720, height: 1280), landscapeSize: CGSize = CGSize(width: 1280, height: 720), compressionSettings: CompressionSettings = CompressionSettings(), videoTrack: AVAssetTrack) {
+        self.portraitSize = portraitSize
+        self.landscapeSize = landscapeSize
         self.compressionSettings = compressionSettings
         self.videoTrack = videoTrack
     }
     
     func outputConfiguration() -> [String: Any] {
-        return videoSettings(w: width, h: height, compression: compressionSettings.settings())
+        return videoSettings(w: sizeForVideoOrientation().width, h: sizeForVideoOrientation().height, compression: compressionSettings.settings())
+    }
+    
+    func sizeForVideoOrientation() -> CGSize {
+        if videoTrack.naturalSize.height > videoTrack.naturalSize.width {
+            return portraitSize
+        }
+        
+        return landscapeSize
     }
     
     private func videoSettings(w: CGFloat, h: CGFloat, compression: [String: Any]) -> [String: Any] {
@@ -91,7 +99,7 @@ struct VideoComposition {
     
     func composition() -> AVVideoComposition? {
         let videoSize = naturaledSize(videoTrack: videoTrack)
-        let transform = videoTransformation(videoTrack: videoTrack, naturalSize: videoSize, targetSize: CGSize(width: videoOutputSettings.width, height: videoOutputSettings.height))
+        let transform = videoTransformation(videoTrack: videoTrack, naturalSize: videoSize, targetSize: CGSize(width: videoOutputSettings.sizeForVideoOrientation().width, height: videoOutputSettings.sizeForVideoOrientation().height))
         
         return buildComposition(with: videoTrack, fps: videoOutputSettings.compressionSettings.framePerSecond, videoSize: videoSize, transform: transform)
     }
