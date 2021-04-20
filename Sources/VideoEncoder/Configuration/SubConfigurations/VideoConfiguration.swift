@@ -13,6 +13,12 @@ public struct VideoConfiguration {
     public var videoInputSetting: [String: Any]?
     public var videoOutputSetting: VideoOutputSettings
     public var videoComposition: VideoComposition
+    
+    public init(videoInputSetting: [String: Any]?, videoOutputSetting: VideoOutputSettings, videoComposition: VideoComposition) {
+        self.videoInputSetting = videoInputSetting
+        self.videoOutputSetting = videoOutputSetting
+        self.videoComposition = videoComposition
+    }
 }
 
 public struct VideoOutputSettings {
