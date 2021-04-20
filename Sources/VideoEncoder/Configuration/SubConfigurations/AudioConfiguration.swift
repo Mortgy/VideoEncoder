@@ -14,7 +14,7 @@ public struct AudioConfiguration {
     var audioMix: AVAudioMix?
     var audioTimePitchAlgorithm: AVAudioTimePitchAlgorithm?
     
-    init(audioOutputSetting: AudioOutputSettings = AudioOutputSettings()) {
+    public init(audioOutputSetting: AudioOutputSettings = AudioOutputSettings()) {
         self.audioOutputSetting = audioOutputSetting
     }
     
@@ -26,7 +26,7 @@ public struct AudioOutputSettings {
     let sampleRate: Int
     let numberOfChannels: Int
     
-    init(encoding: AudioFormatID = kAudioFormatMPEG4AAC, bitRate: Int = 64000, sampleRate: Int = 44100, numberOfChannels: Int = 2) {
+    public init(encoding: AudioFormatID = kAudioFormatMPEG4AAC, bitRate: Int = 64000, sampleRate: Int = 44100, numberOfChannels: Int = 2) {
         self.encoding = encoding
         self.bitRate = bitRate
         self.sampleRate = sampleRate

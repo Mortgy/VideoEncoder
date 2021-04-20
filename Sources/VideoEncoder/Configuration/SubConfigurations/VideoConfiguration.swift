@@ -22,7 +22,7 @@ public struct VideoOutputSettings {
     let compressionSettings: CompressionSettings
     let videoTrack: AVAssetTrack
     
-    init(portraitSize: CGSize = CGSize(width: 720, height: 1280), landscapeSize: CGSize = CGSize(width: 1280, height: 720), compressionSettings: CompressionSettings = CompressionSettings(), videoTrack: AVAssetTrack) {
+    public init(portraitSize: CGSize = CGSize(width: 720, height: 1280), landscapeSize: CGSize = CGSize(width: 1280, height: 720), compressionSettings: CompressionSettings = CompressionSettings(), videoTrack: AVAssetTrack) {
         self.portraitSize = portraitSize
         self.landscapeSize = landscapeSize
         self.compressionSettings = compressionSettings
@@ -68,7 +68,7 @@ public struct CompressionSettings {
     let maxKeyframePerSecond: Int
     let bitRate: Int
     
-    init(encoding: AVVideoCodecType = .h264, framePerSecond: Float = 24, maxKeyframePerSecond: Int = 1, bitRate: Int = 1000000, maximumDuration: Double = -1) {
+    public init(encoding: AVVideoCodecType = .h264, framePerSecond: Float = 24, maxKeyframePerSecond: Int = 1, bitRate: Int = 1000000, maximumDuration: Double = -1) {
         self.encoding = encoding
         self.framePerSecond = framePerSecond
         self.maxKeyframePerSecond = maxKeyframePerSecond
@@ -92,7 +92,7 @@ public struct VideoComposition {
     var videoOutputSettings: VideoOutputSettings
     var videoTrack: AVAssetTrack
     
-    init(videoOutputSettings: VideoOutputSettings, videoTrack: AVAssetTrack) {
+    public init(videoOutputSettings: VideoOutputSettings, videoTrack: AVAssetTrack) {
         self.videoOutputSettings = videoOutputSettings
         self.videoTrack = videoTrack
     }

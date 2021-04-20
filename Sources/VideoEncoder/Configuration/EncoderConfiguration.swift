@@ -14,7 +14,7 @@ public struct EncoderConfiguration {
     let videoConfiguration: VideoConfiguration
     let exportConfiguration: ExportConfiguration
 
-    init(audioConfiguration: AudioConfiguration, videoConfiguration: VideoConfiguration, exportConfiguration: ExportConfiguration) {
+    public init(audioConfiguration: AudioConfiguration, videoConfiguration: VideoConfiguration, exportConfiguration: ExportConfiguration) {
         self.audioConfiguration = audioConfiguration
         self.videoConfiguration = videoConfiguration
         self.exportConfiguration = exportConfiguration
