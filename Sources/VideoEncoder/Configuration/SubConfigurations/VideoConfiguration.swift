@@ -9,13 +9,13 @@ import Foundation
 import AVFoundation
 import AVFoundation.AVVideoSettings
 
-struct VideoConfiguration {
+public struct VideoConfiguration {
     var videoInputSetting: [String: Any]?
     var videoOutputSetting: VideoOutputSettings
     var videoComposition: VideoComposition
 }
 
-struct VideoOutputSettings {
+public struct VideoOutputSettings {
     
     let portraitSize: CGSize
     let landscapeSize: CGSize
@@ -60,7 +60,7 @@ struct VideoOutputSettings {
     
 }
 
-struct CompressionSettings {
+public struct CompressionSettings {
     
     let encoding: AVVideoCodecType
     let maximumDuration: Double
@@ -87,7 +87,7 @@ struct CompressionSettings {
     }
 }
 
-struct VideoComposition {
+public struct VideoComposition {
     
     var videoOutputSettings: VideoOutputSettings
     var videoTrack: AVAssetTrack

@@ -8,7 +8,7 @@
 import Foundation
 import AVFoundation
 
-struct EncoderConfiguration {
+public struct EncoderConfiguration {
     
     let audioConfiguration: AudioConfiguration
     let videoConfiguration: VideoConfiguration
@@ -21,7 +21,7 @@ struct EncoderConfiguration {
     }
 }
 
-func defaultEncoderConfiguration(videoTrack: AVAssetTrack) -> EncoderConfiguration {
+public func defaultEncoderConfiguration(videoTrack: AVAssetTrack) -> EncoderConfiguration {
 
     let videoOutputSettings = VideoOutputSettings(videoTrack: videoTrack)
     let composition = VideoComposition(videoOutputSettings: videoOutputSettings, videoTrack: videoTrack)

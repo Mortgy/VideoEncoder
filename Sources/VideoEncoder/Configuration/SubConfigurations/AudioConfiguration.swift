@@ -8,7 +8,7 @@
 import Foundation
 import AVFoundation
 
-struct AudioConfiguration {
+public struct AudioConfiguration {
     var audioInputSetting: [String: Any]?
     var audioOutputSetting: AudioOutputSettings?
     var audioMix: AVAudioMix?
@@ -20,7 +20,7 @@ struct AudioConfiguration {
     
 }
 
-struct AudioOutputSettings {
+public struct AudioOutputSettings {
     let encoding: AudioFormatID
     let bitRate: Int
     let sampleRate: Int

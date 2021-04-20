@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension URL {
+public extension URL {
     static func temporaryExportURL() -> URL {
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!
         let filename = ProcessInfo.processInfo.globallyUniqueString + ".mp4"

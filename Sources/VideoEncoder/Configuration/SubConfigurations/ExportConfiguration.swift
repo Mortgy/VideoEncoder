@@ -8,7 +8,7 @@
 import Foundation
 import AVFoundation
 
-struct ExportConfiguration {
+public struct ExportConfiguration {
     var outputURL = URL.temporaryExportURL()
     var fileType: AVFileType = .mp4
     var shouldOptimizeForNetworkUse = false

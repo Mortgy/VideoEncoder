@@ -9,7 +9,7 @@ import Foundation
 import AVFoundation
 import Photos
 
-class VideoEncoder {
+public class VideoEncoder {
     
     private(set) var asset: AVAsset
     
