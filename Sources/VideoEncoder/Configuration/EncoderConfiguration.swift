@@ -10,9 +10,9 @@ import AVFoundation
 
 public struct EncoderConfiguration {
     
-    let audioConfiguration: AudioConfiguration
-    let videoConfiguration: VideoConfiguration
-    let exportConfiguration: ExportConfiguration
+    public let audioConfiguration: AudioConfiguration
+    public let videoConfiguration: VideoConfiguration
+    public let exportConfiguration: ExportConfiguration
 
     public init(audioConfiguration: AudioConfiguration, videoConfiguration: VideoConfiguration, exportConfiguration: ExportConfiguration) {
         self.audioConfiguration = audioConfiguration

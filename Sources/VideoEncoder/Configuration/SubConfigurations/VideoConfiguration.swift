@@ -10,17 +10,17 @@ import AVFoundation
 import AVFoundation.AVVideoSettings
 
 public struct VideoConfiguration {
-    var videoInputSetting: [String: Any]?
-    var videoOutputSetting: VideoOutputSettings
-    var videoComposition: VideoComposition
+    public var videoInputSetting: [String: Any]?
+    public var videoOutputSetting: VideoOutputSettings
+    public var videoComposition: VideoComposition
 }
 
 public struct VideoOutputSettings {
     
-    let portraitSize: CGSize
-    let landscapeSize: CGSize
-    let compressionSettings: CompressionSettings
-    let videoTrack: AVAssetTrack
+    public let portraitSize: CGSize
+    public let landscapeSize: CGSize
+    public let compressionSettings: CompressionSettings
+    public let videoTrack: AVAssetTrack
     
     public init(portraitSize: CGSize = CGSize(width: 720, height: 1280), landscapeSize: CGSize = CGSize(width: 1280, height: 720), compressionSettings: CompressionSettings = CompressionSettings(), videoTrack: AVAssetTrack) {
         self.portraitSize = portraitSize
@@ -29,11 +29,11 @@ public struct VideoOutputSettings {
         self.videoTrack = videoTrack
     }
     
-    func outputConfiguration() -> [String: Any] {
+    public func outputConfiguration() -> [String: Any] {
         return videoSettings(w: sizeForVideoOrientation().width, h: sizeForVideoOrientation().height, compression: compressionSettings.settings())
     }
     
-    func sizeForVideoOrientation() -> CGSize {
+    public func sizeForVideoOrientation() -> CGSize {
         if videoTrack.naturalSize.height > videoTrack.naturalSize.width {
             return portraitSize
         }

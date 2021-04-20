@@ -9,10 +9,10 @@ import Foundation
 import AVFoundation
 
 public struct AudioConfiguration {
-    var audioInputSetting: [String: Any]?
-    var audioOutputSetting: AudioOutputSettings?
-    var audioMix: AVAudioMix?
-    var audioTimePitchAlgorithm: AVAudioTimePitchAlgorithm?
+    public var audioInputSetting: [String: Any]?
+    public var audioOutputSetting: AudioOutputSettings?
+    public var audioMix: AVAudioMix?
+    public var audioTimePitchAlgorithm: AVAudioTimePitchAlgorithm?
     
     public init(audioOutputSetting: AudioOutputSettings = AudioOutputSettings()) {
         self.audioOutputSetting = audioOutputSetting
@@ -21,10 +21,10 @@ public struct AudioConfiguration {
 }
 
 public struct AudioOutputSettings {
-    let encoding: AudioFormatID
-    let bitRate: Int
-    let sampleRate: Int
-    let numberOfChannels: Int
+    public let encoding: AudioFormatID
+    public let bitRate: Int
+    public let sampleRate: Int
+    public let numberOfChannels: Int
     
     public init(encoding: AudioFormatID = kAudioFormatMPEG4AAC, bitRate: Int = 64000, sampleRate: Int = 44100, numberOfChannels: Int = 2) {
         self.encoding = encoding
