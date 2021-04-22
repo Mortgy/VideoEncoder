@@ -33,7 +33,8 @@ public class VideoEncoder {
     // MARK: - Exporting properties
     public var progress: Float = 0 {
         didSet {
-            progressHandler?(progress)
+            //considering video and audio progress
+            progressHandler?(progress/2)
         }
     }
     public var videoProgress: Float = 0 {
