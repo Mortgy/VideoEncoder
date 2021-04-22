@@ -39,7 +39,7 @@ open class VideoPickerViewModel: NSObject {
 extension VideoPickerViewModel: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        
+        picker.dismiss(animated: true)
     }
     
     public func imagePickerController(_ picker: UIImagePickerController,

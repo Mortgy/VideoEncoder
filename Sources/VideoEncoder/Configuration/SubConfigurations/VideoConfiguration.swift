@@ -36,21 +36,22 @@ public struct VideoOutputSettings {
     }
     
     public func outputConfiguration() -> [String: Any] {
-        return videoSettings(w: sizeForVideoOrientation().width, h: sizeForVideoOrientation().height, compression: compressionSettings.settings())
+        return videoSettings(size: sizeForVideoOrientation(), compression: compressionSettings.settings())
     }
     
     public func sizeForVideoOrientation() -> CGSize {
-        if videoTrack.naturalSize.height > videoTrack.naturalSize.width {
+        let realVideoSize = VideoConfigurationHelper().naturaledSize(videoTrack: videoTrack)
+        if realVideoSize.height > realVideoSize.width {
             return portraitSize
         }
         
         return landscapeSize
     }
     
-    private func videoSettings(w: CGFloat, h: CGFloat, compression: [String: Any]) -> [String: Any] {
+    private func videoSettings(size: CGSize, compression: [String: Any]) -> [String: Any] {
         var settings: [String : Any] = [
-            AVVideoWidthKey: w,
-            AVVideoHeightKey: h
+            AVVideoWidthKey: size.width,
+            AVVideoHeightKey: size.height
         ]
         
         settings[AVVideoCompressionPropertiesKey] = compression
@@ -69,18 +70,15 @@ public struct VideoOutputSettings {
 public struct CompressionSettings {
     
     let encoding: AVVideoCodecType
-    let maximumDuration: Double
     let framePerSecond: Float
     let maxKeyframePerSecond: Int
     let bitRate: Int
     
-    public init(encoding: AVVideoCodecType = .h264, framePerSecond: Float = 24, maxKeyframePerSecond: Int = 1, bitRate: Int = 1000000, maximumDuration: Double = -1) {
+    public init(encoding: AVVideoCodecType = .h264, framePerSecond: Float = 30, maxKeyframePerSecond: Int = 1, bitRate: Int = 2000000) {
         self.encoding = encoding
         self.framePerSecond = framePerSecond
         self.maxKeyframePerSecond = maxKeyframePerSecond
         self.bitRate = bitRate
-        self.maximumDuration = maximumDuration
-        
     }
     
     func settings () -> [String: Any] {
@@ -97,36 +95,53 @@ public struct VideoComposition {
     
     var videoOutputSettings: VideoOutputSettings
     var videoTrack: AVAssetTrack
+    var customVideoComposition: AVMutableVideoComposition
+    var hasCIFilter = false
     
-    public init(videoOutputSettings: VideoOutputSettings, videoTrack: AVAssetTrack) {
+    public init(videoOutputSettings: VideoOutputSettings, videoTrack: AVAssetTrack, customVideoComposition: AVMutableVideoComposition) {
         self.videoOutputSettings = videoOutputSettings
         self.videoTrack = videoTrack
+        self.customVideoComposition = customVideoComposition
     }
     
     func composition() -> AVVideoComposition? {
-        let videoSize = naturaledSize(videoTrack: videoTrack)
-        let transform = videoTransformation(videoTrack: videoTrack, naturalSize: videoSize, targetSize: CGSize(width: videoOutputSettings.sizeForVideoOrientation().width, height: videoOutputSettings.sizeForVideoOrientation().height))
+        let videoSize = VideoConfigurationHelper().naturaledSize(videoTrack: videoTrack)
+        let targetSize = videoOutputSettings.sizeForVideoOrientation()
+        let transform = VideoConfigurationHelper().videoTransformation(videoTrack: videoTrack, naturalSize: videoSize, targetSize: targetSize)
         
-        return buildComposition(with: videoTrack, fps: videoOutputSettings.compressionSettings.framePerSecond, videoSize: videoSize, transform: transform)
+        return buildComposition(with: videoTrack, customVideoComposition: customVideoComposition, usingCIFilter: hasCIFilter, fps: videoOutputSettings.compressionSettings.framePerSecond, videoSize: videoSize, transform: transform)
     }
     
-    func buildComposition(with videoTrack: AVAssetTrack, fps: Float, videoSize: CGSize, transform: CGAffineTransform) -> AVVideoComposition {
-        let videoComposition = AVMutableVideoComposition()
+    public mutating func usingCIFilter(hasCIFilter: Bool) {
+        self.hasCIFilter = hasCIFilter
+    }
+    
+    public mutating func updateCustomVideoComposition(customVideoComposition: AVMutableVideoComposition) {
+        self.customVideoComposition = customVideoComposition
+    }
+    
+    public func buildComposition(with videoTrack: AVAssetTrack, customVideoComposition: AVMutableVideoComposition, usingCIFilter: Bool, fps: Float, videoSize: CGSize, transform: CGAffineTransform) -> AVVideoComposition {
+        let videoComposition = customVideoComposition
         
         let trackFrameRate = fps
         videoComposition.frameDuration = CMTime(value: 1, timescale: CMTimeScale(trackFrameRate))
         
         videoComposition.renderSize = videoSize
         
-        let passThroughInstruction = AVMutableVideoCompositionInstruction()
-        passThroughInstruction.timeRange = videoTrack.timeRange
-        let passThroughLayer = AVMutableVideoCompositionLayerInstruction(assetTrack: videoTrack)
-        passThroughLayer.setTransform(transform, at: .zero)
-        passThroughInstruction.layerInstructions = [passThroughLayer]
-        videoComposition.instructions = [passThroughInstruction]
+        if usingCIFilter == false {
+            let passThroughInstruction = AVMutableVideoCompositionInstruction()
+            passThroughInstruction.timeRange = videoTrack.timeRange
+            let passThroughLayer = AVMutableVideoCompositionLayerInstruction(assetTrack: videoTrack)
+            passThroughLayer.setTransform(transform, at: .zero)
+            passThroughInstruction.layerInstructions = [passThroughLayer]
+            videoComposition.instructions = [passThroughInstruction]
+        }
         
         return videoComposition
     }
+}
+
+fileprivate struct VideoConfigurationHelper {
     
     func naturaledSize (videoTrack: AVAssetTrack) -> CGSize {
         var naturalSize = videoTrack.naturalSize

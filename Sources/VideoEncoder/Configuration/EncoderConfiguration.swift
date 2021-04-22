@@ -11,7 +11,7 @@ import AVFoundation
 public struct EncoderConfiguration {
     
     public let audioConfiguration: AudioConfiguration
-    public let videoConfiguration: VideoConfiguration
+    public var videoConfiguration: VideoConfiguration
     public let exportConfiguration: ExportConfiguration
 
     public init(audioConfiguration: AudioConfiguration, videoConfiguration: VideoConfiguration, exportConfiguration: ExportConfiguration) {
@@ -24,7 +24,7 @@ public struct EncoderConfiguration {
 public func defaultEncoderConfiguration(videoTrack: AVAssetTrack) -> EncoderConfiguration {
 
     let videoOutputSettings = VideoOutputSettings(videoTrack: videoTrack)
-    let composition = VideoComposition(videoOutputSettings: videoOutputSettings, videoTrack: videoTrack)
+    let composition = VideoComposition(videoOutputSettings: videoOutputSettings, videoTrack: videoTrack, customVideoComposition: AVMutableVideoComposition())
     
     let videoConfig = VideoConfiguration(videoInputSetting: [String: Any](), videoOutputSetting: videoOutputSettings, videoComposition: composition)
     let audioConfig = AudioConfiguration()

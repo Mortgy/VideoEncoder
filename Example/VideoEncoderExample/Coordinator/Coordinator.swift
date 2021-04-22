@@ -24,7 +24,10 @@ class Coordinator: NSObject {
         let videoAsset = AVAsset(url: videoAssetURL)
         if let videoTrack = videoAsset.tracks(withMediaType: .video).first {
             
-            let encoderConfiguration = defaultEncoderConfiguration(videoTrack: videoTrack)
+            var encoderConfiguration = defaultEncoderConfiguration(videoTrack: videoTrack)
+            //enable to test using CIFilters
+//            encoderConfiguration.videoConfiguration.videoComposition.usingCIFilter(hasCIFilter: true)
+//            encoderConfiguration.videoConfiguration.videoComposition.updateCustomVideoComposition(customVideoComposition: applyFilter(videoAsset: videoAsset))
             let viewModel = EncoderViewModel(coordinator: self, encoderConfiguration: encoderConfiguration, videoAssetUrl: videoAssetURL)
             
             let encoderViewController = EncoderViewController(viewModel: viewModel)
@@ -46,6 +49,22 @@ class Coordinator: NSObject {
     
     func present(viewController: UIViewController, from: UIViewController) {
         from.present(viewController, animated: true)
+    }
+    
+    func applyFilter(videoAsset: AVAsset) -> AVMutableVideoComposition{
+        return AVMutableVideoComposition(asset: videoAsset, applyingCIFiltersWithHandler: { request in
+            let imageFilter = CIFilter(name: "CIPhotoEffectChrome")
+
+            // Clamp to avoid blurring transparent pixels at the image edges
+            let source = request.sourceImage.clampedToExtent()
+            imageFilter!.setValue(source, forKey: kCIInputImageKey)
+            
+            // Crop the blurred output to the bounds of the original image
+            let output = imageFilter?.outputImage!.cropped(to: request.sourceImage.extent)
+            
+            // Provide the filter output to the composition
+            request.finish(with: output!, context: nil)
+        })
     }
 }
 

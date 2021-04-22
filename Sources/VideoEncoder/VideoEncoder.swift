@@ -13,7 +13,7 @@ public class VideoEncoder {
     
     private(set) var asset: AVAsset
     
-    fileprivate let encoderConfiguration: EncoderConfiguration
+    fileprivate var encoderConfiguration: EncoderConfiguration
     fileprivate var reader: AVAssetReader!
     fileprivate var videoOutput: AVAssetReaderVideoCompositionOutput?
     fileprivate var audioOutput: AVAssetReaderAudioMixOutput?
@@ -83,9 +83,11 @@ public class VideoEncoder {
             
             // Maximum Video Duration
             let duration: CMTimeRange
-            if encoderConfiguration.videoConfiguration.videoOutputSetting.compressionSettings.maximumDuration > 0 && asset.duration.seconds > encoderConfiguration.videoConfiguration.videoOutputSetting.compressionSettings.maximumDuration {
+            if let timeRange = encoderConfiguration.exportConfiguration.timeRange {
+                duration = timeRange
+            } else if encoderConfiguration.exportConfiguration.maximumDuration > 0 && asset.duration.seconds > encoderConfiguration.exportConfiguration.maximumDuration {
                 let beginTime = CMTimeMakeWithSeconds(0, preferredTimescale: asset.duration.timescale)
-                duration = CMTimeRangeMake(start: beginTime, duration: CMTimeMakeWithSeconds(encoderConfiguration.videoConfiguration.videoOutputSetting.compressionSettings.maximumDuration, preferredTimescale: asset.duration.timescale))
+                duration = CMTimeRangeMake(start: beginTime, duration: CMTimeMakeWithSeconds(encoderConfiguration.exportConfiguration.maximumDuration, preferredTimescale: asset.duration.timescale))
             } else {
                 duration = CMTimeRangeMake(start: CMTime(value: 0, timescale: asset.duration.timescale), duration: asset.duration)
             }
