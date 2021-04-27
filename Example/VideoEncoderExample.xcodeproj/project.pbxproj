@@ -32,6 +32,8 @@
 		50BDA9E6262C375E0089C342 /* AudioConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BDA9DF262C375E0089C342 /* AudioConfiguration.swift */; };
 		50BDA9E7262C375E0089C342 /* VideoConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BDA9E0262C375E0089C342 /* VideoConfiguration.swift */; };
 		50BDA9E8262C375E0089C342 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BDA9E2262C375E0089C342 /* URL.swift */; };
+		50FAA7B126385B29003ABD08 /* EncoderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FAA7B026385B29003ABD08 /* EncoderModel.swift */; };
+		50FAA7B426385C50003ABD08 /* VideoPickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FAA7B326385C50003ABD08 /* VideoPickerModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +85,8 @@
 		50BDA9DF262C375E0089C342 /* AudioConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioConfiguration.swift; sourceTree = "<group>"; };
 		50BDA9E0262C375E0089C342 /* VideoConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoConfiguration.swift; sourceTree = "<group>"; };
 		50BDA9E2262C375E0089C342 /* URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
+		50FAA7B026385B29003ABD08 /* EncoderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncoderModel.swift; sourceTree = "<group>"; };
+		50FAA7B326385C50003ABD08 /* VideoPickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPickerModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +182,7 @@
 		50BA3BA02627991D001699B3 /* VideoPickerViewController */ = {
 			isa = PBXGroup;
 			children = (
+				50FAA7B226385C40003ABD08 /* Model */,
 				50BA3BA726279958001699B3 /* Controller */,
 				50BA3BA626279950001699B3 /* ViewModel */,
 				50BA3BA52627994A001699B3 /* View */,
@@ -188,6 +193,7 @@
 		50BA3BA126279928001699B3 /* VideoEncoderViewController */ = {
 			isa = PBXGroup;
 			children = (
+				50FAA7AF26385B1E003ABD08 /* Model */,
 				50BA3BA426279940001699B3 /* View */,
 				50BA3BA32627993C001699B3 /* ViewModel */,
 				50BA3BA226279936001699B3 /* Controller */,
@@ -332,6 +338,22 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		50FAA7AF26385B1E003ABD08 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				50FAA7B026385B29003ABD08 /* EncoderModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		50FAA7B226385C40003ABD08 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				50FAA7B326385C50003ABD08 /* VideoPickerModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -395,7 +417,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1240;
-				LastUpgradeCheck = 1240;
+				LastUpgradeCheck = 1250;
 				TargetAttributes = {
 					50BA3B48262773D3001699B3 = {
 						CreatedOnToolsVersion = 12.4;
@@ -477,9 +499,11 @@
 				50BA3BD22627A4C9001699B3 /* MediaPicker.swift in Sources */,
 				50BA3C1D2629DE2E001699B3 /* Strings.swift in Sources */,
 				50BDA9E6262C375E0089C342 /* AudioConfiguration.swift in Sources */,
+				50FAA7B126385B29003ABD08 /* EncoderModel.swift in Sources */,
 				50BA3B4D262773D3001699B3 /* AppDelegate.swift in Sources */,
 				50BA3C072628DC5D001699B3 /* Alert.swift in Sources */,
 				50BA3BDA26282141001699B3 /* EncoderViewModel.swift in Sources */,
+				50FAA7B426385C50003ABD08 /* VideoPickerModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,7 +603,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -634,7 +658,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

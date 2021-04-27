@@ -9,28 +9,27 @@ import Foundation
 import AVFoundation
 import Photos
 
-protocol EncoderDelegate: class {
+protocol EncoderDelegate: AnyObject {
     func encodingProgressChanged(progress: Float)
     func saveToLibrarySuccessful()
     func saveToLibraryFailed()
 }
 
 class EncoderViewModel {
-    fileprivate var videoAssetUrl: URL
     fileprivate var encoderConfiguration: EncoderConfiguration
     fileprivate var exportSession: VideoEncoder!
     private(set) weak var coordinator: Coordinator!
     weak var delegate: EncoderDelegate?
+    let model: EncoderModel
     
-    init(coordinator: Coordinator, encoderConfiguration: EncoderConfiguration, videoAssetUrl: URL) {
+    init(coordinator: Coordinator, encoderConfiguration: EncoderConfiguration, model: EncoderModel) {
         self.coordinator = coordinator
         self.encoderConfiguration = encoderConfiguration
-        self.videoAssetUrl = videoAssetUrl
+        self.model = model
     }
     
     func startEncoding() {
-        let asset = AVAsset(url: videoAssetUrl)
-        exportSession = VideoEncoder(asset: asset, encoderConfiguration: encoderConfiguration)
+        exportSession = VideoEncoder(asset: model.videoAsset, encoderConfiguration: encoderConfiguration)
         
         exportSession.progressHandler = { [weak self] (progress) in
             DispatchQueue.main.async {

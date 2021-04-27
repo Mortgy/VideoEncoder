@@ -10,13 +10,19 @@ import UIKit
 
 class MediaPicker {
     private let pickerController: UIImagePickerController
-    private let viewModelDelegate: VideoPickerViewModelDelegate
+    private weak var viewModelDelegate: VideoPickerViewModelDelegate?
     
-    init(delegate: (UIImagePickerControllerDelegate & UINavigationControllerDelegate), presenter: VideoPickerViewModelDelegate) {
-        viewModelDelegate = presenter
+    init() {
         pickerController = UIImagePickerController()
-        pickerController.delegate = delegate
         pickerController.mediaTypes = ["public.movie"]
+    }
+    
+    func setPickerDelegate(delegate: (UIImagePickerControllerDelegate & UINavigationControllerDelegate)) {
+        pickerController.delegate = delegate
+    }
+    
+    func setPresenter(presenter: VideoPickerViewModelDelegate) {
+        viewModelDelegate = presenter
     }
 }
 
@@ -30,7 +36,7 @@ extension MediaPicker {
         
         return UIAlertAction(title: title, style: .default) { [unowned self] _ in
             pickerController.sourceType = type
-            viewModelDelegate.viewModelPresent(viewController: pickerController)
+            self.viewModelDelegate?.viewModelPresent(viewController: pickerController)
         }
     }
     
@@ -56,6 +62,6 @@ extension MediaPicker {
             alertController.popoverPresentationController?.permittedArrowDirections = [.down, .up]
         }
         
-        viewModelDelegate.viewModelPresent(viewController: alertController)
+        viewModelDelegate?.viewModelPresent(viewController: alertController)
     }
 }

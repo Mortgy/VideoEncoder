@@ -15,7 +15,9 @@ class Coordinator: NSObject {
     
     func start() {
         printDebug("Coordinator Starting")
-        let viewModel = VideoPickerViewModel(coordinator: self)
+        let picker = MediaPicker()
+        let model = VideoPickerModel(picker: picker)
+        let viewModel = VideoPickerViewModel(coordinator: self, model: model)
         rootViewController = VideoPickerViewController(viewModel: viewModel)
     }
     
@@ -24,11 +26,12 @@ class Coordinator: NSObject {
         let videoAsset = AVAsset(url: videoAssetURL)
         if let videoTrack = videoAsset.tracks(withMediaType: .video).first {
             
-            var encoderConfiguration = defaultEncoderConfiguration(videoTrack: videoTrack)
+            let encoderConfiguration = defaultEncoderConfiguration(videoTrack: videoTrack)
             //enable to test using CIFilters
 //            encoderConfiguration.videoConfiguration.videoComposition.usingCIFilter(hasCIFilter: true)
 //            encoderConfiguration.videoConfiguration.videoComposition.updateCustomVideoComposition(customVideoComposition: applyFilter(videoAsset: videoAsset))
-            let viewModel = EncoderViewModel(coordinator: self, encoderConfiguration: encoderConfiguration, videoAssetUrl: videoAssetURL)
+            let model = EncoderModel(videoAssetUrl: videoAssetURL)
+            let viewModel = EncoderViewModel(coordinator: self, encoderConfiguration: encoderConfiguration, model: model)
             
             let encoderViewController = EncoderViewController(viewModel: viewModel)
             encoderViewController.modalPresentationStyle = .fullScreen

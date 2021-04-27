@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import AVFoundation
 
-public protocol VideoPickerViewModelDelegate: class {
+public protocol VideoPickerViewModelDelegate: AnyObject {
     func viewModelPresent(viewController: UIViewController)
 }
 
@@ -17,20 +17,23 @@ open class VideoPickerViewModel: NSObject {
     
     weak var delegate: VideoPickerViewModelDelegate! {
         didSet {
-            picker = MediaPicker(delegate: self, presenter: delegate!)
+            model.picker.setPickerDelegate(delegate: self)
+            model.picker.setPresenter(presenter: delegate)
         }
     }
     
     private(set) weak var coordinator: Coordinator!
-    private(set) var picker: MediaPicker?
+    private(set) var model: VideoPickerModel
     
-    init(coordinator: Coordinator) {
+    init(coordinator: Coordinator, model: VideoPickerModel) {
         self.coordinator = coordinator
+        self.model = model
+//        model = VideoPickerModel(picker: MediaPicker(presenter: delegate!))
         super.init()
     }
     
     func presentPicker(from: UIView) {
-        picker?.present(from: from)
+        model.picker.present(from: from)
         printDebug("Media Picker Presented")
     }
 }
