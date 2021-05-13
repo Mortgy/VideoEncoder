@@ -43,7 +43,7 @@ class Coordinator: NSObject {
             }
         } else {
             if let rootVC = rootViewController as? (UIViewController & Alert) {
-                rootVC.showAlert(from: rootVC, title: Strings.invalidVideo.rawValue, message: Strings.invalidVideoMessage.rawValue)
+                rootVC.showAlert(title: Strings.invalidVideo.rawValue, message: Strings.invalidVideoMessage.rawValue)
                 printDebug("Invalid video track provided")
             }
         }

@@ -28,7 +28,6 @@ open class VideoPickerViewModel: NSObject {
     init(coordinator: Coordinator, model: VideoPickerModel) {
         self.coordinator = coordinator
         self.model = model
-//        model = VideoPickerModel(picker: MediaPicker(presenter: delegate!))
         super.init()
     }
     
@@ -37,7 +36,6 @@ open class VideoPickerViewModel: NSObject {
         printDebug("Media Picker Presented")
     }
 }
-
 
 extension VideoPickerViewModel: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     

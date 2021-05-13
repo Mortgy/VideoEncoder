@@ -147,7 +147,7 @@ public class VideoEncoder {
             
             writer.startWriting()
             reader.startReading()
-            writer.startSession(atSourceTime: .zero)
+            writer.startSession(atSourceTime: duration.start)
             
             encodeVideoData()
             encodeAudioData()

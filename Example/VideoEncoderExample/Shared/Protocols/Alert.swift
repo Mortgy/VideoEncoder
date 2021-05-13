@@ -9,12 +9,12 @@ import Foundation
 import UIKit
 
 protocol Alert {
-    func showAlert(from: (UIViewController & Alert), title: String, message: String, actions: [UIAlertAction]?)
+    func showAlert(title: String, message: String, actions: [UIAlertAction]?)
 }
 
 extension Alert where Self: UIViewController{
-    func showAlert(from: (UIViewController & Alert), title: String, message: String, actions: [UIAlertAction]? = nil) {
-        guard from.presentedViewController  == nil else { return }
+    func showAlert(title: String, message: String, actions: [UIAlertAction]? = nil) {
+        guard presentedViewController  == nil else { return }
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
@@ -26,6 +26,6 @@ extension Alert where Self: UIViewController{
             alertController.addAction(action)
         }
         
-        from.present(alertController, animated: true)
+        present(alertController, animated: true)
     }
 }

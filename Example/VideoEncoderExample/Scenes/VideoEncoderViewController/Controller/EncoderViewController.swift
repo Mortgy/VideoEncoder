@@ -41,13 +41,13 @@ extension EncoderViewController: EncoderDelegate, Alert {
         let action = UIAlertAction(title: Strings.ok.rawValue, style: .default) { [weak self] _ in
             self?.dismiss(animated: true)
         }
-        showAlert(from: self, title: Strings.success.rawValue, message: Strings.compressionCompleted.rawValue, actions: [action])
+        showAlert(title: Strings.success.rawValue, message: Strings.compressionCompleted.rawValue, actions: [action])
     }
     
     func saveToLibraryFailed() {
         let action = UIAlertAction(title: Strings.ok.rawValue, style: .default) { [weak self] _ in
             self?.dismiss(animated: true)
         }
-        showAlert(from: self, title: Strings.compressionFailed.rawValue, message: Strings.compressionFailedMessage.rawValue, actions: [action])
+        showAlert(title: Strings.compressionFailed.rawValue, message: Strings.compressionFailedMessage.rawValue, actions: [action])
     }
 }
