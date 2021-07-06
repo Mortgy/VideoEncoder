@@ -71,13 +71,11 @@ public struct CompressionSettings {
     
     let encoding: AVVideoCodecType
     let framePerSecond: Float
-    let maxKeyframePerSecond: Int
     let bitRate: Int
     
     public init(encoding: AVVideoCodecType = .h264, framePerSecond: Float = 30, maxKeyframePerSecond: Int = 1, bitRate: Int = 2000000) {
         self.encoding = encoding
         self.framePerSecond = framePerSecond
-        self.maxKeyframePerSecond = maxKeyframePerSecond
         self.bitRate = bitRate
     }
     
@@ -85,7 +83,6 @@ public struct CompressionSettings {
         [
             AVVideoAverageNonDroppableFrameRateKey: framePerSecond,
             AVVideoAverageBitRateKey: bitRate,
-            AVVideoMaxKeyFrameIntervalKey: maxKeyframePerSecond,
             AVVideoProfileLevelKey: AVVideoProfileLevelH264HighAutoLevel
         ]
     }
