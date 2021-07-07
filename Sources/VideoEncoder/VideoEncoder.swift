@@ -65,16 +65,16 @@ public class VideoEncoder {
         
         let exportSession = VideoEncoder(asset: asset, encoderConfiguration: encoderConfiguration)
         
-        exportSession.progressHandler = { encodingProgress in
-            progress(encodingProgress)
+        exportSession.progressHandler = { _ in
+            progress(exportSession.progress)
         }
         
         exportSession.completionHandler = { error in
-            guard error != nil else {
+            guard error == nil else {
                 completion(.failure(error!))
                 return
             }
-            completion(.success(encoderConfiguration.exportConfiguration.outputURL))
+            completion(.success(exportSession.encoderConfiguration.exportConfiguration.outputURL))
         }
         
         exportSession.export()
