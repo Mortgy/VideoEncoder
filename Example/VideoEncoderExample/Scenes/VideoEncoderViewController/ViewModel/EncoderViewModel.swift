@@ -36,9 +36,11 @@ class EncoderViewModel {
                 self?.delegate?.encodingProgressChanged(progress: progress)
             }
         }
+        
         exportSession.completionHandler = { [weak self] (error) in
             self?.saveOutputToLibrary(fileURL: (self?.encoderConfiguration.exportConfiguration.outputURL)!)
         }
+        
         exportSession.export()
     }
 }

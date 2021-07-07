@@ -61,6 +61,25 @@ public class VideoEncoder {
         self.encoderConfiguration = encoderConfiguration
     }
     
+    class func backgroundVideoEncoder(asset: AVAsset, encoderConfiguration: EncoderConfiguration, progress: @escaping (Float) -> Void, completion: @escaping (Result<URL, Error>) -> Void) {
+        
+        let exportSession = VideoEncoder(asset: asset, encoderConfiguration: encoderConfiguration)
+        
+        exportSession.progressHandler = { encodingProgress in
+            progress(encodingProgress)
+        }
+        
+        exportSession.completionHandler = { error in
+            guard error != nil else {
+                completion(.failure(error!))
+                return
+            }
+            completion(.success(encoderConfiguration.exportConfiguration.outputURL))
+        }
+        
+        exportSession.export()
+    }
+
     // MARK: - Main
     public func cancelExport() {
         if let writer = writer, let reader = reader {
